@@ -17,7 +17,8 @@ steps:
 
   - name: alpine
     dir: 'cloudbuild-playground'
-    entrypoint: ls
+    entrypoint: cat
+    args: ['some_file']
 
   - name: gcr.io/cloud-builders/git
     dir: 'cloudbuild-playground'
