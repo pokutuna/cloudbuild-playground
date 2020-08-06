@@ -1,5 +1,25 @@
 steps:
   - name: gcr.io/cloud-builders/git
-    args: ["clone", "https://github.com/pokutuna/cloudbuild-playground.git"]
-  - name: 'alpine'
-    args: ['ls']
+    args: ['clone', 'https://github.com/pokutuna/cloudbuild-playground.git']
+
+  - name: gcr.io/cloud-builders/git
+    dir: cloudbuild-playground
+    entrypoint: bash
+    args:
+      - '-c'
+      - |
+        git config --local user.name pokutuna-bot
+        git config --local user.email bot@pokutuna.com
+
+  - name: alpine
+    dir: cloudbuild-playground
+    entrypoint: sh
+    args: ['-c', 'echo 1 > some_file']
+
+  - name: gcr.io/cloud-builders/git
+    dir: 'cloudbuild-playground'
+    entrypoint: bash
+    args:
+      - '-c'
+      - |
+        git diff --quiet some_file || git commit -m 'Update some_file' some_file
