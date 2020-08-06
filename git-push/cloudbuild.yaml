@@ -22,6 +22,10 @@ steps:
 
   - name: gcr.io/cloud-builders/git
     dir: 'cloudbuild-playground'
+    args: ['ls-files']
+
+  - name: gcr.io/cloud-builders/git
+    dir: 'cloudbuild-playground'
     args: ['status']
 
   - name: gcr.io/cloud-builders/git
