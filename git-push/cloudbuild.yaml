@@ -13,7 +13,7 @@ steps:
 
   - name: alpine
     entrypoint: sh
-    args: ['-c', 'echo 1 > /workspace/gcloudbuild-playground/some_file']
+    args: ['-c', 'echo 1 > /workspace/cloudbuild-playground/some_file']
 
   - name: gcr.io/cloud-builders/git
     dir: 'cloudbuild-playground'
