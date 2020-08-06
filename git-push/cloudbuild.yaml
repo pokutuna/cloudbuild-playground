@@ -1,3 +1,5 @@
 steps:
   - name: gcr.io/cloud-builders/git
-    args: ['log']
+    args: ["clone", "https://github.com/pokutuna/cloudbuild-playground.git"]
+  - name: 'alpine'
+    args: ['ls']
