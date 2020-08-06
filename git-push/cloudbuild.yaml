@@ -18,6 +18,10 @@ steps:
 
   - name: gcr.io/cloud-builders/git
     dir: 'cloudbuild-playground'
+    args: ['diff']
+
+  - name: gcr.io/cloud-builders/git
+    dir: 'cloudbuild-playground'
     entrypoint: bash
     args:
       - '-c'
