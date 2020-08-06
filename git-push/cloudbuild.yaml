@@ -12,9 +12,8 @@ steps:
         git config --local user.email bot@pokutuna.com
 
   - name: alpine
-    dir: cloudbuild-playground
     entrypoint: sh
-    args: ['-c', 'echo 1 > some_file']
+    args: ['-c', 'echo 1 > /workspace/gcloudbuild-playground/some_file']
 
   - name: gcr.io/cloud-builders/git
     dir: 'cloudbuild-playground'
