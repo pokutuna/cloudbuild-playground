@@ -24,8 +24,7 @@ steps:
     args: ['clone', 'git@github.com:pokutuna/cloudbuild-playground.git']
 
   # Set git configs to commit files.
-  # Use `--local` to store into .git/config.
-  # $HOME/.gitconfig is not under the `/workspace` directory.
+  # Use `--local` to store into .git/config. $HOME/.gitconfig is not under the `/workspace` directory.
   # (Or mount & keep the config as global.)
   - name: gcr.io/cloud-builders/git
     dir: $_DIR
@@ -35,9 +34,8 @@ steps:
       - |
         git config --local user.name pokutuna-bot
         git config --local user.email bot@pokutuna.com
-        git config --local credential.helper 'store --file /workspace/.git-credentials'
 
-  # Update file.
+  # Update a file.
   - name: alpine
     entrypoint: sh
     args:
@@ -61,8 +59,9 @@ steps:
     args: ['push', 'origin', 'HEAD:$BRANCH_NAME']
 
 options:
-  - name: ssh
-    path: /root/.ssh
+  volumes:
+    - name: ssh
+      path: /root/.ssh
 
 substitutions:
   _DIR: cloudbuild-playground/git-push
