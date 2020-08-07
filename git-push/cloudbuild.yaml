@@ -1,10 +1,9 @@
 steps:
   - name: gcr.io/cloud-builders/gcloud
     entrypoint: bash
-    args: [
-      '-c',
-      'gcloud secrets versions access latest --secret=git-credentials > .git-credentials'
-    ]
+    args:
+      - '-c',
+      - 'gcloud secrets versions access latest --secret=git-credentials > .git-credentials'
 
   - name: gcr.io/cloud-builders/git
     args: ['clone', 'https://github.com/pokutuna/cloudbuild-playground.git']
@@ -21,15 +20,16 @@ steps:
 
   - name: alpine
     entrypoint: sh
-    args: ['-c', 'echo 1 > /workspace/$_DIR/some_file']
+    args:
+      - '-c'
+      - 'echo 1 > /workspace/$_DIR/some_file'
 
   - name: gcr.io/cloud-builders/git
     dir: $_DIR
     entrypoint: bash
     args:
       - '-c'
-      - |
-        git diff --quiet some_file || git commit -m 'Update some_file' some_file
+      - git diff --quiet some_file || git commit -m 'Update some_file' some_file
 
   - name: gcr.io/cloud-builders/git
     dir: $_DIR
