@@ -3,14 +3,15 @@ steps:
     dir: $_DIR
     args: ['build', '-t', 'build-in-host:latest', '.']
 
-  # works using the image build on first step
   - name: 'docker/compose:1.26.2'
     dir: $_DIR
-    args: ['-f', 'docker-compose.yaml', 'run', 'by_image']
+    args: ['-f', 'docker-compose.yaml', 'run', 'app']
 
   - name: 'docker/compose:1.26.2'
     dir: $_DIR
-    args: ['-f', 'docker-compose.yaml', 'run', 'by_build']
+    args: ['-f', 'docker-compose.yaml', 'run', 'app']
+    env:
+      - COMPOSE_DOCKER_CLI_BUILD=1
 
 substitutions:
   _DIR: cache-from-compose
