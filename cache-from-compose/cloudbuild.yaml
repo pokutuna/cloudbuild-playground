@@ -3,14 +3,14 @@ steps:
     dir: $_DIR
     args: ['build', '-t', 'build-in-host:latest', '.']
 
+  # works using the image build on first step
   - name: 'docker/compose:1.26.2'
     dir: $_DIR
-    args: ['-f', 'docker-compose.yaml', 'run', 'app']
+    args: ['-f', 'docker-compose.yaml', 'run', 'by_image']
 
-  # check cached
   - name: 'docker/compose:1.26.2'
     dir: $_DIR
-    args: ['-f', 'docker-compose.yaml', 'run', 'app']
+    args: ['-f', 'docker-compose.yaml', 'run', 'by_build']
 
 substitutions:
   _DIR: cache-from-compose
