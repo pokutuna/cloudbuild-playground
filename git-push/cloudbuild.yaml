@@ -21,7 +21,7 @@ steps:
 
   # Clone the repository.
   - name: gcr.io/cloud-builders/git
-    args: ['clone', 'git@github.com:pokutuna/cloudbuild-playground.git']
+    args: ['clone', '-b', '$BRANCH_NAME', 'git@github.com:pokutuna/cloudbuild-playground.git']
 
   # Set git configs to commit files.
   # Use `--local` to store into .git/config. $HOME/.gitconfig is not under the `/workspace` directory.
@@ -40,7 +40,7 @@ steps:
     entrypoint: sh
     args:
       - '-c'
-      - 'echo 2 > /workspace/$_DIR/some_file'
+      - 'echo 1 > /workspace/$_DIR/some_file'
 
   # Do `git commit` if the file changed.
   - name: gcr.io/cloud-builders/git
