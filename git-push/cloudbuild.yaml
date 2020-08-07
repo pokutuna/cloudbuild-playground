@@ -17,7 +17,7 @@ steps:
       - |
         git config --local user.name pokutuna-bot
         git config --local user.email bot@pokutuna.com
-        git config --local credential.helper store --file /workspace/.git-credentials
+        git config --local credential.helper 'store --file /workspace/.git-credentials'
 
   - name: alpine
     entrypoint: sh
