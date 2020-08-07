@@ -1,8 +1,4 @@
 version: '3.8'
 services:
   app:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-      cache_from:
-        - build-in-host:latest
+    image: build-in-host:latest
