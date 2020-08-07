@@ -2,7 +2,7 @@ steps:
   - name: gcr.io/cloud-builders/gcloud
     entrypoint: bash
     args:
-      - '-c',
+      - '-c'
       - 'gcloud secrets versions access latest --secret=git-credentials > .git-credentials'
 
   - name: gcr.io/cloud-builders/git
