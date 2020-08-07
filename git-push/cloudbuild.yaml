@@ -1,13 +1,32 @@
 steps:
+  # Get credentials from Secret Manager
   - name: gcr.io/cloud-builders/gcloud
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - 'gcloud secrets versions access latest --secret=deploy-key-cloudbuild-playground > /root/.ssh/id_github'
+
+  # Set up ssh
+  - name: gcr.io/cloud-builders/git
     entrypoint: bash
     args:
       - '-c'
-      - 'gcloud secrets versions access latest --secret=git-credentials > .git-credentials'
+      - |
+        chmod 600 /root/.ssh/id_github
+        cat <<EOF >/root/.ssh/config
+        Hostname github.com
+        IdentityFile /root/.ssh/id_github
+        EOF
+        ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts
 
+  # Clone the repository.
   - name: gcr.io/cloud-builders/git
-    args: ['clone', 'https://github.com/pokutuna/cloudbuild-playground.git']
+    args: ['clone', 'git@github.com:pokutuna/cloudbuild-playground.git']
 
+  # Set git configs to commit files.
+  # Use `--local` to store into .git/config.
+  # $HOME/.gitconfig is not under the `/workspace` directory.
+  # (Or mount & keep the config as global.)
   - name: gcr.io/cloud-builders/git
     dir: $_DIR
     entrypoint: bash
@@ -18,12 +37,14 @@ steps:
         git config --local user.email bot@pokutuna.com
         git config --local credential.helper 'store --file /workspace/.git-credentials'
 
+  # Update file.
   - name: alpine
     entrypoint: sh
     args:
       - '-c'
-      - 'echo 1 > /workspace/$_DIR/some_file'
+      - 'echo 2 > /workspace/$_DIR/some_file'
 
+  # Do `git commit` if the file changed.
   - name: gcr.io/cloud-builders/git
     dir: $_DIR
     entrypoint: bash
@@ -38,6 +59,10 @@ steps:
   - name: gcr.io/cloud-builders/git
     dir: $_DIR
     args: ['push', 'origin', 'HEAD:$BRANCH_NAME']
+
+options:
+  - name: ssh
+    path: /root/.ssh
 
 substitutions:
   _DIR: cloudbuild-playground/git-push
