@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM alpine:20200626
 
 RUN mkdir /workdir
 COPY command.ash /workdir
