@@ -1,0 +1,16 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    dir: $_DIR
+    args: [build, '.']
+
+  - name: 'docker/compose:1.26.2'
+    dir: $_DIR
+    args: ['-f', 'docker-compose.yaml', 'build']
+
+options:
+  env:
+    - DOCKER_BUILDKIT=1
+    - COMPOSE_DOCKER_CLI_BUILD=1
+
+substitutions:
+  _DIR: buildkit
