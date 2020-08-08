@@ -4,7 +4,7 @@ steps:
 
   - name: gcr.io/cloud-builders/docker
     entrypoint: 'echo'
-    args: ['$$DOCKER_OPTS']
+    args: ['$DOCKER_OPTS']
 
   # 1. pull using images before build
   # - name: gcr.io/cloud-builders/docker
