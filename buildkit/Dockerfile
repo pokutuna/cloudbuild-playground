@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3
 
 RUN mkdir /workdir
 COPY command.ash /workdir
