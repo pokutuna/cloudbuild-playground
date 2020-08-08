@@ -1,7 +1,11 @@
 steps:
   - name: gcr.io/cloud-builders/docker
     dir: $_DIR
-    args: [build, '.']
+    args: ['info']
+
+  - name: gcr.io/cloud-builders/docker
+    dir: $_DIR
+    args: ['build', '.']
 
   - name: 'docker/compose:1.26.2'
     dir: $_DIR
